@@ -3,7 +3,7 @@
     public class BookViewModel
     {
         public int BookId { get; set; }
-        public string? About { get; set; }
-        public byte[]? Image { get; set; }
+        public string? Tematic { get; set; }
+        public string? Image { get; set; }
     }
 }

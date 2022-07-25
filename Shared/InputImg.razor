@@ -1,7 +1,7 @@
 ﻿<div>
     <label>@label</label>
     <div class="form-group">
-        <InputFile  OnChange="InputFileSelected" accept=".jpg,.jpeg,.png"  />
+        <InputFile class="form-control" OnChange="InputFileSelected" accept=".jpg,.jpeg,.png"  />
     </div>
 </div>
 <div>
@@ -30,20 +30,20 @@
     [Parameter] public EventCallback<string> SelectedImage { get; set; }
     private string? ImageBase64;
 
-
     public async Task InputFileSelected(InputFileChangeEventArgs ev)
     {
+
         var Images = ev.GetMultipleFiles();
 
         foreach (var image in Images)
         {
+            //var ResizeImage = await image.RequestImageFileAsync("image/png", 200, 200);
             var arrayBytes = new byte[image.Size];
             await image.OpenReadStream().ReadAsync(arrayBytes);
             ImageBase64 = Convert.ToBase64String(arrayBytes);
             ImageURL = null;
             await SelectedImage.InvokeAsync(ImageBase64);
             StateHasChanged();
-
         }
     }  
 }

@@ -1,4 +1,6 @@
-﻿namespace MyLabraryProject.Services
+﻿using System.Net.Http.Json;
+
+namespace MyLabraryProject.Services
 {
     public class BookService : IBook
     {
@@ -10,6 +12,7 @@
             _configuration = configuration;
         }
         public IEnumerable<BookViewModel> Books { get; set; }
+        public BookViewModel Book { get; set; }
         public async  Task<IEnumerable<BookViewModel>> GetAll()
         {
             var response =  await _httpClient.GetAsync("https://localhost:7192/api/books");
@@ -28,6 +31,30 @@
 
             return Books;
         }
+
+        public async Task Create(BookViewModelCreate model)
+        {
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync("https://localhost:7192/create", model);
+                response.EnsureSuccessStatusCode();
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    var jsonOptions = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true,
+                    };
+                   // Book = JsonSerializer.Deserialize<BookViewModel>(json, jsonOptions)!;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+           
+        }
+
     }
 }
 

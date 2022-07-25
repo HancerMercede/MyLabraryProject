@@ -1,0 +1,49 @@
+﻿<div>
+    <label>@label</label>
+    <div class="form-group">
+        <InputFile  OnChange="InputFileSelected" accept=".jpg,.jpeg,.png"  />
+    </div>
+</div>
+<div>
+     @if (ImageBase64 != null)
+    {
+        <div>
+            <div style="margin:10px;">
+                <img src="data:image/jpeg;base64, @ImageBase64" style="width: 300px;" />
+            </div>
+        </div>
+    }
+      @if (ImageURL != null)
+    {
+        <div>
+            <div style="margin:10px;">
+                <img src="@ImageURL" style="width: 300px;" />
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+
+    [Parameter] public string? label { get; set; } = "Image";
+    [Parameter] public string? ImageURL { get; set; } // This is when you got to edit one image, show the exists image.
+    [Parameter] public EventCallback<string> SelectedImage { get; set; }
+    private string? ImageBase64;
+
+
+    public async Task InputFileSelected(InputFileChangeEventArgs ev)
+    {
+        var Images = ev.GetMultipleFiles();
+
+        foreach (var image in Images)
+        {
+            var arrayBytes = new byte[image.Size];
+            await image.OpenReadStream().ReadAsync(arrayBytes);
+            ImageBase64 = Convert.ToBase64String(arrayBytes);
+            ImageURL = null;
+            await SelectedImage.InvokeAsync(ImageBase64);
+            StateHasChanged();
+
+        }
+    }  
+}

@@ -1,0 +1,29 @@
+﻿@page "/AddBook"
+@inject IBook _service
+@inject NavigationManager _navigate
+<PageTitle>
+    AddBooks
+</PageTitle>
+<div class="container-fluid">
+    <h1 class="card-title">Add a new book</h1>
+    <BookEditForm Book="Book" OnValidSubmit="Crear"></BookEditForm>
+</div>
+
+
+@code {
+    public BookViewModelCreate Book = new();
+
+    private async Task Crear()
+    {
+        await _service.Create(Book);
+        if (Task.CompletedTask.Equals(true))
+        {
+            _navigate.NavigateTo("/books");
+        }
+        else
+        {
+            _navigate.NavigateTo("/");
+        }
+
+    }
+}

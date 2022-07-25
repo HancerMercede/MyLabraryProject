@@ -5,3 +5,4 @@ global using Microsoft.AspNetCore.Components.Web;
 global using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 global using MyLabraryProject;
 global using MyLabraryProject.Services;
+global using Tewr.Blazor.FileReader;

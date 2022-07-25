@@ -1,0 +1,47 @@
+﻿<EditForm Model="Book" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+    <div class="form-group">
+        <label class="form-label" for="BookName">Book's Name</label>
+        <InputText Id="BookName" class="form-control" @bind-Value="Book.BookName"></InputText>
+        <ValidationMessage For="@(()=>Book.BookName)"/>
+    </div>
+    <div class="form-group">
+        <label class="form-label" for="Tematic">Book's Tematic</label>
+        <textarea Id="Tematic" class="form-control" maxlength="500" @bind="Book.Tematic"></textarea>
+        <ValidationMessage For="@(()=>Book.Tematic)"/>
+    </div>
+    <div class="form-group">
+        <InputImg label="Book's Image" SelectedImage="SelectedImage" ImageURL="@imageURL"/>
+        <ValidationMessage For="@(()=>Book.Image)"/>
+    </div>
+
+        <div class="form-group my-3">
+        <button class="btn btn-primary" type="submit" >
+            <i class="oi oi-file"></i>
+            Save
+        </button>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter]
+    public BookViewModelCreate Book { get; set; }
+    [Parameter]
+    public EventCallback OnValidSubmit { get; set; }
+    string? imageURL;
+    protected override void OnInitialized()
+    {
+        if (!string.IsNullOrEmpty(Book.Image))
+        {
+            imageURL = Book.Image.ToString();
+            Book.Image = null;
+        }
+    }
+
+    private void SelectedImage(string Base64Image)
+    {
+        Book.Image = Base64Image;
+        imageURL = null;
+    }
+}

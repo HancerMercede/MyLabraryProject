@@ -4,14 +4,14 @@
 <div class="container-fluid">
     <h1 class="card-title">
         Books
-    </h1>
+    </h1>   
     <div class="form-group">
          <input class="input form-control" type="text" maxlength="50" placeholder="Search books..." />
     </div>
     <hr />
     @if (Books is null)
     {
-        <p class="text-info text-black">@message</p>
+        <p class="text-info"><em>@message</em></p>
     }
     else
     {
@@ -52,7 +52,7 @@
             }
             catch (Exception ex)
             {
-                message = ex.Message;
+                message = string.Concat("Sorry something happens fetching the data: ", ex.Message);
             }
     }
 }

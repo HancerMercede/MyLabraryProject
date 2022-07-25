@@ -12,19 +12,10 @@
 
 @code {
     public BookViewModelCreate Book = new();
+
     private async Task Crear()
     {
-        
         await _service.Create(Book);
         _navigate.NavigateTo("/books");
-        //if (Task.CompletedTask.Equals(true))
-        //{
-            
-        //}
-        //else
-        //{
-        //    _navigate.NavigateTo("/");
-        //}
-
     }
 }

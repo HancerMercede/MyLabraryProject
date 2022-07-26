@@ -5,13 +5,11 @@
     <h1 class="card-title">
         Books
     </h1>   
-    <div class="form-group">
-         <input class="input form-control" type="text" maxlength="50" placeholder="Search books..." />
-    </div>
+    <Search  Books="SearchText" filter="@filter"/>
     <hr />
     @if (Books is null)
     {
-        <p class="text-info"><em>@message</em></p>
+        <p class="text-info">@message</p>
     }
     else
     {
@@ -57,15 +55,19 @@
 
     string message = string.Empty;
 
+
+    [Parameter] public string filter { get; set; } = string.Empty;
+    [Parameter] public EventCallback SearchText { get; set; }
     protected override async Task OnInitializedAsync()
     {
-            try
-            {
-               Books = await _service.GetAll();
-            }
-            catch (Exception ex)
-            {
-                message = string.Concat("Sorry something happens fetching the data: ", ex.Message);
-            }
+        try
+        {
+            Books = await _service.GetAll();
+
+        }
+        catch (Exception ex)
+        {
+            message = string.Concat("Sorry something happens fetching the data: ", ex.Message);
+        }
     }
 }

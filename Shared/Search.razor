@@ -1,0 +1,17 @@
+﻿@inject IBook _service
+<div>
+    <div class="form-group">
+        <input type="text" class="form-control"  placeholder="Search..."/>
+    </div>
+</div>
+
+
+@code {
+    [Parameter] public string filter { get; set; }
+    [Parameter] public EventCallback Books { get; set; }
+    private async Task OnSearch()
+    {
+        var dtos = await _service.Search(filter);
+        await Books.InvokeAsync(dtos);
+    }
+}

@@ -4,5 +4,6 @@
     {
         Task<IEnumerable<BookViewModel>> GetAll();
         Task Create(BookViewModelCreate model);
+        Task<IEnumerable<BookViewModel>> Search(string BookName);
     }
 }

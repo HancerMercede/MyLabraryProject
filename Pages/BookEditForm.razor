@@ -8,7 +8,7 @@
     </div>
     <div class="form-group">
         <label class="form-label" for="Tematic">Book's Tematic</label>
-        <textarea Id="Tematic" class="form-control" maxlength="500" @bind="Book.Tematic"></textarea>
+        <InputTextArea Id="Tematic" class="form-control" maxlength="500" @bind-Value="Book.Tematic"></InputTextArea>
         <ValidationMessage For="@(()=>Book.Tematic)"/>
     </div>
     <div class="form-group">

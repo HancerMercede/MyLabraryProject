@@ -8,7 +8,6 @@ namespace MyLabraryProject.ViewModel
         public string BookName { get; set; }
         [Required, StringLength(500)]
         public string Tematic { get; set; }
-        [Required]
         public string? Image { get; set; }
     }
 }

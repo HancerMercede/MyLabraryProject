@@ -52,9 +52,23 @@ namespace MyLabraryProject.Services
             {
                 throw new Exception(ex.Message);
             }
-           
         }
 
+        public async Task<IEnumerable<BookViewModel>> Search(string BookName)
+        {
+            var response = await _httpClient.GetAsync($"https://localhost:7192/Search/{BookName}");
+            response.EnsureSuccessStatusCode();
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                var jsonOptions = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true,
+                };
+                Books = JsonSerializer.Deserialize<IEnumerable<BookViewModel>>(json, jsonOptions)!;
+            }
+            return Books;
+        }
     }
 }
 
